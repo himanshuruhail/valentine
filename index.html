@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+        font-family: 'Segoe UI', sans-serif;
+        overflow: hidden;
+    }
+
+    .card {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        width: 90%;
+        max-width: 420px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 10;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    input {
+        padding: 10px;
+        width: 80%;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+        text-align: center;
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .buttons {
+        margin-top: 20px;
+        position: relative;
+        height: 70px;
+    }
+
+    button {
+        padding: 12px 28px;
+        font-size: 16px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+    }
+
+    #yes {
+        background: #ff4d6d;
+        color: white;
+    }
+
+    #no {
+        background: #eee;
+        position: absolute;
+        right: 0;
+    }
+
+    .success {
+        display: none;
+        animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0.8); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .success h1 {
+        font-size: 30px;
+    }
+
+    .heart {
+        position: absolute;
+        color: red;
+        font-size: 20px;
+        animation: float 4s linear infinite;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh); opacity: 1; }
+        100% { transform: translateY(-10vh); opacity: 0; }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="card" id="proposal">
+    <h1>Will you be my Valentine? 💕</h1>
+
+    <input type="text" id="name" placeholder="Enter her name" value="Shivani">
+
+    <h1 id="question">Shivani, will you be my Valentine? 💖</h1>
+
+    <div class="buttons">
+        <button id="yes">YES</button>
+        <button id="no">NO</button>
+    </div>
+</div>
+
+<div class="card success" id="success">
+    <h1>💖 YAY!!! 💖</h1>
+    <p>Best decision ever 😘</p>
+    <p>I love you ❤️</p>
+</div>
+
+<audio id="music">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">
+</audio>
+
+<script>
+    const noBtn = document.getElementById("no");
+    const yesBtn = document.getElementById("yes");
+    const proposal = document.getElementById("proposal");
+    const success = document.getElementById("success");
+    const nameInput = document.getElementById("name");
+    const question = document.getElementById("question");
+    const music = document.getElementById("music");
+
+    nameInput.addEventListener("input", () => {
+        question.innerText = `${nameInput.value || "You"}, will you be my Valentine? 💖`;
+    });
+
+    // Desktop: extreme escape
+    noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * 300 - 150;
+        const y = Math.random() * 200 - 100;
+        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    // Mobile: no click allowed
+    noBtn.addEventListener("touchstart", e => e.preventDefault());
+
+    yesBtn.addEventListener("click", () => {
+        proposal.style.display = "none";
+        success.style.display = "block";
+        music.play();
+        startHearts();
+    });
+
+    function startHearts() {
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 4000);
+        }
+    }
+</script>
+
+</body>
+</html>
